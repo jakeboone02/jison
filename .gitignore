@@ -5,3 +5,11 @@ node_modules
 *.bak
 *~
 web/content/assets/js/jison.js
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
