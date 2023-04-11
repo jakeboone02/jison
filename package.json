@@ -23,7 +23,8 @@
     "email": "jison@librelist.com",
     "url": "http://github.com/zaach/jison/issues"
   },
-  "main": "lib/jison",
+  "type": "module",
+  "main": "lib/jison.js",
   "bin": "lib/cli.js",
   "dependencies": {
     "JSONSelect": "0.4.0",

@@ -1,5 +1,4 @@
-var Jison = require('../setup').Jison,
-  Lexer = require('../setup').Lexer;
+import { Jison, Lexer } from '../setup';
 
 it('test 0+0 grammar', () => {
   var lexData2 = {

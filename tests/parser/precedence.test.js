@@ -1,5 +1,4 @@
-var Jison = require('../setup').Jison,
-  RegExpLexer = require('../setup').RegExpLexer;
+import { Jison, RegExpLexer } from '../setup';
 
 var lexData = {
   rules: [

@@ -1,2 +1,3 @@
-exports.Jison = require('../lib/jison').Jison;
-exports.Lexer = exports.RegExpLexer = require('jison-lex');
+export const Jison = require('../lib/jison').Jison;
+export const RegExpLexer = require('jison-lex');
+export const Lexer = RegExpLexer;

@@ -1,4 +1,4 @@
-const Jison = require('../setup').Jison;
+import { Jison } from '../setup';
 
 it('test right-recursive nullable grammar', function () {
   const grammar = {

@@ -1,5 +1,4 @@
-var Jison = require('../setup').Jison,
-  Lexer = require('../setup').Lexer;
+import { Jison, Lexer } from '../setup';
 
 it('test error caught', () => {
   var lexData = {

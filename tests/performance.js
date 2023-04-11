@@ -1,6 +1,6 @@
 // TODO: ...should probably have some real performance tests.
 
-var Jison = require('./setup').Jison;
+import Jison from '../setup';
 
 var grammar = {
   lex: {
