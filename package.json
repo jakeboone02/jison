@@ -15,7 +15,6 @@
     "tokenizer",
     "compiler"
   ],
-  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/zaach/jison.git"
@@ -26,9 +25,6 @@
   },
   "main": "lib/jison",
   "bin": "lib/cli.js",
-  "engines": {
-    "node": ">=0.4"
-  },
   "dependencies": {
     "JSONSelect": "0.4.0",
     "cjson": "0.3.0",
@@ -41,12 +37,13 @@
   },
   "devDependencies": {
     "browserify": "2.x.x",
+    "bun-types": "^0.5.8",
     "jison": "workspace:.",
     "test": "0.6.x",
     "uglify-js": "~2.4.0"
   },
   "scripts": {
-    "test": "node tests/all-tests.js"
+    "test": "bun test"
   },
   "homepage": "http://jison.org",
   "packageManager": "yarn@3.5.0"

@@ -6,6 +6,8 @@ node_modules
 *~
 web/content/assets/js/jison.js
 
+tests/**/tmp-*
+
 .pnp.*
 .yarn/*
 !.yarn/patches
