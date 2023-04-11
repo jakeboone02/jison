@@ -39,10 +39,12 @@
     "bun-types": "^0.5.8",
     "jison": "workspace:.",
     "jsonc-parser": "^3.2.0",
+    "prettier": "2.8.7",
     "test": "0.6.x",
     "uglify-js": "~2.4.0"
   },
   "scripts": {
+    "fmt": "bunx prettier --write '{lib,tests}/**/*.{md,js,ts}'",
     "test": "bun test"
   },
   "homepage": "http://jison.org",
