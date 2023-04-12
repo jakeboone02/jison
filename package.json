@@ -38,6 +38,7 @@
   "devDependencies": {
     "browserify": "2.x.x",
     "bun-types": "^0.5.8",
+    "commander": "^10.0.0",
     "jison": "workspace:.",
     "jsonc-parser": "^3.2.0",
     "prettier": "2.8.7",
