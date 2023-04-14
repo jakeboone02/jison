@@ -26,6 +26,10 @@
   "type": "module",
   "main": "lib/jison.js",
   "bin": "lib/cli.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./lib/jison.js"
+  },
   "dependencies": {
     "JSONSelect": "0.4.0",
     "ebnf-parser": "0.1.10",
