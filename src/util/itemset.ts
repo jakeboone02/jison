@@ -2,7 +2,41 @@
 
 import { typal } from './typal.js';
 
-const setMixin = {
+// TODO: update these from any to real types
+interface SetMixin {
+  constructor: any;
+  concat: any;
+  eq: any;
+  indexOf: any;
+  union: any;
+  intersection: any;
+  complement: any;
+  subset: any;
+  superset: any;
+  joinSet: any;
+  contains: any;
+  item: any;
+  i: any;
+  first: any;
+  last: any;
+  size: any;
+  isEmpty: any;
+  copy: any;
+  toString: any;
+  push?: any;
+  shift?: any;
+  unshift?: any;
+  forEach?: any;
+  some?: any;
+  every?: any;
+  join?: any;
+  sort?: any;
+  filter?: any;
+  slice?: any;
+  map?: any;
+}
+
+const setMixin: SetMixin = {
   constructor: function Set_constructor(set, raw) {
     this._items = [];
     if (set && set.constructor === Array) this._items = raw ? set : set.slice(0);
@@ -12,10 +46,10 @@ const setMixin = {
     this._items.push.apply(this._items, setB._items || setB);
     return this;
   },
-  eq: function eq(set) {
+  eq: function eq(set): boolean {
     return this._items.length === set._items.length && this.subset(set);
   },
-  indexOf: function indexOf(item) {
+  indexOf: function indexOf(item): number {
     if (item && item.eq) {
       for (var k = 0; k < this._items.length; k++) if (item.eq(this._items[k])) return k;
       return -1;
@@ -78,24 +112,24 @@ const setMixin = {
   },
 };
 
-for (const e of ['push', 'shift', 'unshift', 'forEach', 'some', 'every', 'join', 'sort']) {
-  setMixin[e] = function () {
-    return Array.prototype[e].apply(this._items, arguments);
+for (const e of ['push', 'shift', 'unshift', 'forEach', 'some', 'every', 'join', 'sort'] as const) {
+  setMixin[e] = function (...args: any[]) {
+    return Array.prototype[e].apply(this._items, args);
   };
 }
-for (const e of ['filter', 'slice', 'map']) {
-  setMixin[e] = function () {
-    return new ItemSet(Array.prototype[e].apply(this._items, arguments), true);
+for (const e of ['filter', 'slice', 'map'] as const) {
+  setMixin[e] = function (...args: any[]) {
+    return new ItemSet(Array.prototype[e].apply(this._items, args), true);
   };
 }
 
 export const ItemSet = typal.construct(setMixin).mix({
-  union: function (a, b) {
-    var ar = {};
-    for (var k = a.length - 1; k >= 0; --k) {
+  union: function (a: Record<string, any>, b: Record<string, any>) {
+    const ar: Record<string, any> = {};
+    for (let k = a.length - 1; k >= 0; --k) {
       ar[a[k]] = true;
     }
-    for (var i = b.length - 1; i >= 0; --i) {
+    for (let i = b.length - 1; i >= 0; --i) {
       if (!ar[b[i]]) {
         a.push(b[i]);
       }

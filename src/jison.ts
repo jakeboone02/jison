@@ -9,30 +9,37 @@ import esprima from 'esprima';
 import Lexer from 'jison-lex';
 import { ItemSet } from './util/itemset.js';
 import { typal } from './util/typal.js';
-import { createRequire } from 'node:module';
+import { version } from '../package.json';
+import { Pojo } from './types.js';
 
-const require = createRequire(import.meta.url);
-const { version } = require('../package.json');
+interface TJison {
+  Generator?: any;
+  parser?: any;
+  Parser?: any;
+  print?: any;
+  version: string;
+}
 
-export const Jison = { version: version };
+export const Jison: TJison = { version: version };
 
-export let LR0Generator;
-export let LALRGenerator;
-export let SLRGenerator;
-export let LR1Generator;
-export let LLGenerator;
+export let LR0Generator: any;
+export let LALRGenerator: any;
+export let SLRGenerator: any;
+export let LR1Generator: any;
+export let LLGenerator: any;
 
 // detect print
 if (typeof console !== 'undefined' && console.log) {
   Jison.print = console.log;
-} else if (typeof puts !== 'undefined') {
-  Jison.print = function print() {
-    puts([].join.call(arguments, ' '));
-  };
-} else if (typeof print !== 'undefined') {
-  Jison.print = print;
+  // TODO: where are `puts` and `print` supposed to come from???
+  // } else if (typeof puts !== 'undefined') {
+  //   Jison.print = function print() {
+  //     puts([].join.call(arguments, ' '));
+  //   };
+  // } else if (typeof print !== 'undefined') {
+  //   Jison.print = print;
 } else {
-  Jison.print = function print() {};
+  Jison.print = () => {};
 }
 
 // // default main method for generated es modules
@@ -48,23 +55,22 @@ if (typeof console !== 'undefined' && console.log) {
 //   return Jison.parser.parse(source);
 // }
 
-Jison.Parser = (function () {
-  // iterator utility
-  function each(obj, func) {
-    if (obj.forEach) {
-      obj.forEach(func);
-    } else {
-      var p;
-      for (p in obj) {
-        if (obj.hasOwnProperty(p)) {
-          func.call(obj, obj[p], p, obj);
-        }
+// iterator utility
+function each(obj: any[] | Pojo, func: (...args: any[]) => void) {
+  if (Array.isArray(obj)) {
+    obj.forEach(func);
+  } else {
+    for (const p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        func.call(obj, obj[p], p, obj);
       }
     }
   }
+}
 
-  var Nonterminal = typal.construct({
-    constructor: function Nonterminal(symbol) {
+Jison.Parser = (function () {
+  const Nonterminal = typal.construct({
+    constructor: function (symbol: string /* ? */) {
       this.symbol = symbol;
       this.productions = new ItemSet();
       this.first = [];
@@ -72,18 +78,17 @@ Jison.Parser = (function () {
       this.nullable = false;
     },
     toString: function Nonterminal_toString() {
-      var str = this.symbol + '\n';
-      str += this.nullable ? 'nullable' : 'not nullable';
-      str += '\nFirsts: ' + this.first.join(', ');
-      str += '\nFollows: ' + this.first.join(', ');
-      str += '\nProductions:\n  ' + this.productions.join('\n  ');
-
-      return str;
+      return `${this.symbol}
+${!this.nullable ? 'not' : ''} nullable
+Firsts: ${this.first.join(', ')}
+Follows: ${this.first.join(', ')}
+Productions:
+  ${this.productions.join('\n  ')}`;
     },
   });
 
-  var Production = typal.construct({
-    constructor: function Production(symbol, handle, id) {
+  const Production = typal.construct({
+    constructor: function (symbol: string, handle: string[] /* ? */, id: string /* ? */) {
       this.symbol = symbol;
       this.handle = handle;
       this.nullable = false;
@@ -91,19 +96,19 @@ Jison.Parser = (function () {
       this.first = [];
       this.precedence = 0;
     },
-    toString: function Production_toString() {
-      return this.symbol + ' -> ' + this.handle.join(' ');
+    toString: function () {
+      return `${this.symbol} -> ${this.handle.join(' ')}`;
     },
   });
 
-  var generator = typal.beget();
+  const generator = typal.beget();
 
-  generator.constructor = function Jison_Generator(grammar, opt) {
+  generator.constructor = function Jison_Generator(grammar: string | Pojo, opt: Pojo) {
     if (typeof grammar === 'string') {
-      grammar = ebnfParser.parse(grammar);
+      grammar = ebnfParser.parse(grammar) as Pojo;
     }
 
-    var options = typal.mix.call({}, grammar.options, opt);
+    const options = typal.mix.call({}, grammar.options, opt);
     this.terms = {};
     this.operators = {};
     this.productions = [];
@@ -134,12 +139,12 @@ Jison.Parser = (function () {
     }
   };
 
-  generator.processGrammar = function processGrammarDef(grammar) {
-    var bnf = grammar.bnf,
-      tokens = grammar.tokens,
-      nonterminals = (this.nonterminals = {}),
-      productions = this.productions,
-      self = this;
+  generator.processGrammar = function processGrammarDef(grammar: Pojo) {
+    let bnf = grammar.bnf;
+    let tokens = grammar.tokens;
+    const nonterminals = (this.nonterminals = {});
+    const productions = this.productions;
+    const self = this;
 
     if (!grammar.bnf && grammar.ebnf) {
       bnf = grammar.bnf = ebnfParser.transform(grammar.ebnf);
@@ -153,10 +158,10 @@ Jison.Parser = (function () {
       }
     }
 
-    var symbols = (this.symbols = []);
+    const symbols = (this.symbols = []);
 
     // calculate precedence of operators
-    var operators = (this.operators = processOperators(grammar.operators));
+    const operators = (this.operators = processOperators(grammar.operators));
 
     // build productions from cfg
     this.buildProductions(bnf, productions, nonterminals, symbols, operators);
@@ -171,7 +176,7 @@ Jison.Parser = (function () {
     this.augmentGrammar(grammar);
   };
 
-  generator.augmentGrammar = function augmentGrammar(grammar) {
+  generator.augmentGrammar = function augmentGrammar(grammar: Pojo) {
     if (this.productions.length === 0) {
       throw new Error('Grammar error: must have at least one rule.');
     }
@@ -183,7 +188,7 @@ Jison.Parser = (function () {
     this.EOF = '$end';
 
     // augment the grammar
-    var acceptProduction = new Production('$accept', [this.startSymbol, '$end'], 0);
+    const acceptProduction = new Production('$accept', [this.startSymbol, '$end'], 0);
     this.productions.unshift(acceptProduction);
 
     // prepend parser tokens
@@ -200,37 +205,38 @@ Jison.Parser = (function () {
   };
 
   // set precedence and associativity of operators
-  function processOperators(ops) {
+  function processOperators(ops: any[][]) {
     if (!ops) return {};
-    var operators = {};
-    for (var i = 0, k, prec; (prec = ops[i]); i++) {
-      for (k = 1; k < prec.length; k++) {
+    const operators: Pojo = {};
+    for (let i = 0, prec; (prec = ops[i]); i++) {
+      for (let k = 1; k < prec.length; k++) {
         operators[prec[k]] = { precedence: i + 1, assoc: prec[0] };
       }
     }
     return operators;
   }
 
-  generator.buildProductions = function buildProductions(
-    bnf,
-    productions,
-    nonterminals,
-    symbols,
-    operators
+  generator.buildProductions = function (
+    bnf: Pojo,
+    productions: string[],
+    nonterminals: Pojo,
+    symbols: string[],
+    operators: Pojo
   ) {
-    var actions = [
+    const actions = [
       '/* this == yyval */',
       this.actionInclude || '',
-      'var $0 = $$.length - 1;',
+      'let $0 = $$.length - 1;',
       'switch (yystate) {',
     ];
-    var actionGroups = {};
-    var prods, symbol;
-    var productions_ = [0];
-    var symbolId = 1;
-    var symbols_ = {};
+    const actionGroups: Pojo = {};
+    let prods: string[];
+    let symbol: string;
+    let symbolId = 1;
+    const symbols_: Pojo = {};
+    const productions_ = [0];
 
-    var her = false; // has error recovery
+    let her = false; // has error recovery
 
     function addSymbol(s) {
       if (s && !symbols_[s]) {
@@ -256,12 +262,12 @@ Jison.Parser = (function () {
 
       prods.forEach(buildProduction);
     }
-    for (var action in actionGroups) actions.push(actionGroups[action].join(' '), action, 'break;');
+    for (const action in actionGroups)
+      actions.push(actionGroups[action].join(' '), action, 'break;');
 
-    var sym,
-      terms = [],
-      terms_ = {};
-    each(symbols_, function (id, sym) {
+    const terms: string[] = [];
+    const terms_: Pojo = {};
+    each(symbols_, (id, sym) => {
       if (!nonterminals[sym]) {
         terms.push(sym);
         terms_[id] = sym;
@@ -277,23 +283,24 @@ Jison.Parser = (function () {
     this.productions_ = productions_;
     actions.push('}');
 
-    actions = actions
+    const actionsString = actions
       .join('\n')
       .replace(/YYABORT/g, 'return false')
       .replace(/YYACCEPT/g, 'return true');
 
-    var parameters =
+    let parameters =
       'yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */';
     if (this.parseParams) parameters += ', ' + this.parseParams.join(', ');
 
-    this.performAction = 'function anonymous(' + parameters + ') {\n' + actions + '\n}';
+    this.performAction = 'function anonymous(' + parameters + ') {\n' + actionsString + '\n}';
 
-    function buildProduction(handle) {
-      var r, rhs, i;
+    function buildProduction(handle: any[] | Pojo) {
+      let r: Pojo;
+      let rhs: string[];
       if (handle.constructor === Array) {
         rhs = typeof handle[0] === 'string' ? handle[0].trim().split(' ') : handle[0].slice(0);
 
-        for (i = 0; i < rhs.length; i++) {
+        for (let i = 0; i < rhs.length; i++) {
           if (rhs[i] === 'error') her = true;
           if (!symbols_[rhs[i]]) {
             addSymbol(rhs[i]);
@@ -302,19 +309,21 @@ Jison.Parser = (function () {
 
         if (typeof handle[1] === 'string' || handle.length == 3) {
           // semantic action specified
-          var label = 'case ' + (productions.length + 1) + ':',
-            action = handle[1];
+          const label = 'case ' + (productions.length + 1) + ':';
+          let action = handle[1];
 
           // replace named semantic values ($nonterminal)
           if (action.match(/[$@][a-zA-Z][a-zA-Z0-9_]*/)) {
-            var count = {},
-              names = {};
-            for (i = 0; i < rhs.length; i++) {
+            const count: Pojo = {};
+            const names: Pojo = {};
+            for (let i = 0; i < rhs.length; i++) {
               // check for aliased names, e.g., id[alias]
-              var rhs_i = rhs[i].match(/\[[a-zA-Z][a-zA-Z0-9_-]*\]/);
+              let rhs_i: RegExpMatchArray | string | null = rhs[i].match(
+                /\[[a-zA-Z][a-zA-Z0-9_-]*\]/
+              );
               if (rhs_i) {
-                rhs_i = rhs_i[0].substr(1, rhs_i[0].length - 2);
-                rhs[i] = rhs[i].substr(0, rhs[i].indexOf('['));
+                rhs_i = rhs_i[0].substring(1, rhs_i[0].length - 1);
+                rhs[i] = rhs[i].substring(0, rhs[i].indexOf('['));
               } else {
                 rhs_i = rhs[i];
               }
@@ -375,7 +384,7 @@ Jison.Parser = (function () {
         // no action -> don't care about aliases; strip them.
         handle = handle.replace(/\[[a-zA-Z_][a-zA-Z0-9_-]*\]/g, '');
         rhs = handle.trim().split(' ');
-        for (i = 0; i < rhs.length; i++) {
+        for (let i = 0; i < rhs.length; i++) {
           if (rhs[i] === 'error') her = true;
           if (!symbols_[rhs[i]]) {
             addSymbol(rhs[i]);
@@ -385,7 +394,7 @@ Jison.Parser = (function () {
       }
       if (r.precedence === 0) {
         // set precedence
-        for (i = r.handle.length - 1; i >= 0; i--) {
+        for (let i = r.handle.length - 1; i >= 0; i--) {
           if (!(r.handle[i] in nonterminals) && r.handle[i] in operators) {
             r.precedence = operators[r.handle[i]].precedence;
           }
@@ -406,25 +415,25 @@ Jison.Parser = (function () {
   generator.trace = function trace() {};
 
   generator.warn = function warn() {
-    var args = Array.prototype.slice.call(arguments, 0);
+    const args = Array.prototype.slice.call(arguments, 0);
     Jison.print.call(null, args.join(''));
   };
 
-  generator.error = function error(msg) {
+  generator.error = function error(msg: string) {
     throw new Error(msg);
   };
 
   // Generator debug mixin
-
-  var generatorDebug = {
-    trace: function trace() {
-      Jison.print.apply(null, arguments);
+  const generatorDebug = {
+    symbols: [],
+    trace: function (...args: any[]) {
+      Jison.print.apply(null, args);
     },
     beforeprocessGrammar: function () {
       this.trace('Processing grammar.');
     },
     afteraugmentGrammar: function () {
-      var trace = this.trace;
+      const trace = this.trace;
       each(this.symbols, function (sym, i) {
         trace(sym + '(' + i + ')');
       });
@@ -434,7 +443,7 @@ Jison.Parser = (function () {
   /*
    * Mixin for common behaviors of lookahead parsers
    * */
-  var lookaheadMixin = {};
+  const lookaheadMixin: Pojo = {};
 
   lookaheadMixin.computeLookaheads = function computeLookaheads() {
     if (this.DEBUG) this.mix(lookaheadDebug); // mixin debug methods
@@ -1425,7 +1434,7 @@ return new Parser;
       }
       this.trace('Done.');
     },
-    aftercanonicalCollection: function (states) {
+    aftercanonicalCollection: function (states: any[]) {
       var trace = this.trace;
       trace('\nItem sets\n------');
 

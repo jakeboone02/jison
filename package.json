@@ -24,11 +24,11 @@
     "url": "http://github.com/zaach/jison/issues"
   },
   "type": "module",
-  "main": "lib/jison.js",
+  "main": "dist/jison.js",
   "bin": "lib/cli.js",
   "exports": {
     "./package.json": "./package.json",
-    ".": "./lib/jison.js"
+    ".": "./dist/jison.js"
   },
   "dependencies": {
     "JSONSelect": "0.4.0",
@@ -47,10 +47,13 @@
     "jsonc-parser": "^3.2.0",
     "prettier": "2.8.7",
     "test": "0.6.x",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4",
     "uglify-js": "~2.4.0"
   },
   "scripts": {
     "fmt": "bunx prettier --write '{lib,tests}/**/*.{md,js,ts}'",
+    "build": "tsup",
     "test": "bun test"
   },
   "homepage": "http://jison.org",

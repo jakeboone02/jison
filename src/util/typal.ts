@@ -6,13 +6,13 @@
  * MIT Licensed
  * */
 
-export const typal = (function () {
-  const positionRegEx = /^(before|after)/;
+const positionRegEx = /^(before|after)/;
 
+export const typal = (function () {
   // basic method layering
   // always returns original method's return value
-  function layerMethod(k, fun) {
-    const pos = k.match(positionRegEx)[0];
+  function layerMethod(k: string, fun: Function /* ? */) {
+    const pos = k.match(positionRegEx)?.[0];
     const key = k.replace(positionRegEx, '');
     const prop = this[key];
 
@@ -36,10 +36,9 @@ export const typal = (function () {
   // mixes each argument's own properties into calling object,
   // overwriting them or layering them. i.e. an object method 'meth' is
   // layered by mixin methods 'beforemeth' or 'aftermeth'
-  function typal_mix() {
-    var self = this;
-    for (var i = 0, o, k; i < arguments.length; i++) {
-      o = arguments[i];
+  function typal_mix(...args: any[]) {
+    for (var i = 0, o, k; i < args.length; i++) {
+      o = args[i];
       if (!o) continue;
       if (Object.prototype.hasOwnProperty.call(o, 'constructor')) this.constructor = o.constructor;
       if (Object.prototype.hasOwnProperty.call(o, 'toString')) this.toString = o.toString;
@@ -61,17 +60,15 @@ export const typal = (function () {
     // sugar for object begetting and mixing
     // - Object.create(typal).mix(etc, etc);
     // + typal.beget(etc, etc);
-    beget: function typal_beget() {
-      return arguments.length
-        ? typal_mix.apply(Object.create(this), arguments)
-        : Object.create(this);
+    beget: function typal_beget(...args: any[]) {
+      return args.length ? typal_mix.apply(Object.create(this), args) : Object.create(this);
     },
 
     // Creates a new Class function based on an object with a constructor method
-    construct: function typal_construct() {
-      var o = typal_mix.apply(Object.create(this), arguments);
-      var constructor = o.constructor;
-      var Klass = (o.constructor = function () {
+    construct: function typal_construct(...args: any[]) {
+      const o = typal_mix.apply(Object.create(this), args);
+      const constructor = o.constructor;
+      const Klass: { (): void; [k: string]: any } = (o.constructor = function () {
         return constructor.apply(this, arguments);
       });
       Klass.prototype = o;

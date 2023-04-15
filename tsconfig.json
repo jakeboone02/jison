@@ -2,8 +2,9 @@
   "compilerOptions": {
     "lib": ["esnext"],
     "module": "esnext",
-    "target": "esnext",
-    "outDir": "./build",
+    "target": "es2020",
+    "outDir": "./dist",
+    "noEmit": true,
     "moduleResolution": "bundler",
     "allowJs": true,
     "esModuleInterop": true,
@@ -12,5 +13,5 @@
     "skipLibCheck": true,
     "types": ["bun-types"]
   },
-  "exclude": ["./build/**/*"]
+  "exclude": ["./dist/**/*"]
 }
