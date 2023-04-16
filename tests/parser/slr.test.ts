@@ -1,3 +1,4 @@
+import { expect, it } from 'bun:test';
 import { Jison, Lexer } from '../setup';
 
 var lexData = {
@@ -20,7 +21,8 @@ it('test left-recursive nullable grammar', () => {
   var parser = gen.createParser();
   parser.lexer = new Lexer(lexData);
 
-  expect(parser.parse('xxx'), "parse 3 x's").toBeTruthy();
+  // parse 3 x's
+  expect(parser.parse('xxx')).toBeTruthy();
   // parse single x
   expect(parser.parse('x')).toBeTruthy();
   // throws parse error on invalid token
@@ -42,7 +44,8 @@ it('test right-recursive nullable grammar', () => {
   var parser = gen.createParser();
   parser.lexer = new Lexer(lexData);
 
-  expect(parser.parse('xxx'), "parse 3 x's").toBeTruthy();
+  // parse 3 x's
+  expect(parser.parse('xxx')).toBeTruthy();
   // table has 4 states
   expect(gen.table.length == 4).toBeTruthy();
   // no conflicts

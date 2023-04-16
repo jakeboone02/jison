@@ -1,8 +1,8 @@
 // TODO: ...should probably have some real performance tests.
 
-import Jison from '../setup';
+import { Jison } from './setup';
 
-var grammar = {
+const grammar = {
   lex: {
     macros: {
       digit: '[0-9]',

@@ -1,3 +1,4 @@
+import { expect, it } from 'bun:test';
 import { Jison, Lexer } from '../setup';
 
 var lexData = {
@@ -19,7 +20,8 @@ it('test left-recursive nullable grammar', () => {
   var parser = new Jison.Parser(grammar, { type: 'lr0' });
   parser.lexer = new Lexer(lexData);
 
-  expect(parser.parse('xxx'), "parse 3 x's").toBeTruthy();
+  // parse 3 x's
+  expect(parser.parse('xxx')).toBeTruthy();
   // parse single x
   expect(parser.parse('x')).toBeTruthy();
   // throws parse error on invalid token

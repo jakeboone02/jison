@@ -1,12 +1,13 @@
+import { expect, it } from 'bun:test';
 import { Jison, RegExpLexer } from '../setup';
 
-var lexData = {
-  rules: [
-    ['x', "return 'x';"],
-    ['\\+', "return '+';"],
-    ['$', "return 'EOF';"],
-  ],
-};
+// var lexData = {
+//   rules: [
+//     ['x', "return 'x';"],
+//     ['\\+', "return '+';"],
+//     ['$', "return 'EOF';"],
+//   ],
+// };
 
 it('test Left associative rule', () => {
   var lexData = {

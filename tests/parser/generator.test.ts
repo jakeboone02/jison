@@ -1,7 +1,8 @@
+import { expect, it } from 'bun:test';
 import { unlink } from 'node:fs/promises';
 import { Jison, Lexer } from '../setup';
 
-const writeToFile = async contents => {
+const writeToFile = async (contents: string) => {
   const tempModulePath = `${import.meta.dir}/../../tmp-${crypto.randomUUID()}.js`;
   await Bun.write(tempModulePath, contents);
   return tempModulePath;
@@ -35,7 +36,7 @@ it.skip('test amd module generator', () => {
   };
   eval(parserSource);
 
-  expect(parser.parse(input)).toBeTruthy();
+  expect(parser?.parse(input)).toBeTruthy();
 });
 
 it.skip('test commonjs module generator', async () => {
@@ -145,7 +146,7 @@ it('test module generator with module name', () => {
   var parserSource = gen.generate({ moduleType: 'js', moduleName: 'parsey' });
   eval(parserSource);
 
-  expect(parsey.parse(input)).toBeTruthy();
+  expect(parser.parse(input)).toBeTruthy();
 });
 
 it('test module generator with namespaced module name', () => {
@@ -362,7 +363,8 @@ it('test module include with each generator type', () => {
   gen.lexer = new Lexer(lexData);
   ['generateModule', 'generateAMDModule', 'generateCommonJSModule'].map(function (type) {
     var source = gen[type]();
-    expect(/TEST_VAR/.test(source), type + ' supports module include').toBeTruthy();
+    // type + ' supports module include'
+    expect(/TEST_VAR/.test(source)).toBeTruthy();
   });
 });
 

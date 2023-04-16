@@ -1,4 +1,6 @@
+import { expect, it } from 'bun:test';
 import { Jison, Lexer } from '../setup';
+import { Pojo } from '../../src/types';
 
 var lexData = {
   rules: [
@@ -196,7 +198,7 @@ it('test custom parse error method', () => {
   var parser = new Jison.Parser(grammar, { type: 'lalr' });
   parser.lexer = new Lexer(lexData);
   var result = {};
-  parser.yy.parseError = function (str, hash) {
+  parser.yy.parseError = function (str: string, hash: Pojo) {
     result = hash;
     throw str;
   };
@@ -250,7 +252,7 @@ it('test EOF in "Unexpected token" error message', () => {
   var parser = new Jison.Parser(grammar);
   parser.lexer = new Lexer(lexData);
   parser.lexer.showPosition = null; // needed for "Unexpected" message
-  parser.yy.parseError = function (str, hash) {
+  parser.yy.parseError = function (str: string, hash: Pojo) {
     expect(str.match('end of input')).toBeTruthy();
   };
 

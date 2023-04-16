@@ -1,3 +1,4 @@
+import { expect, it } from 'bun:test';
 import { Jison } from '../setup';
 
 it('test right-recursive nullable grammar', function () {

@@ -1,3 +1,4 @@
+import { expect, it } from 'bun:test';
 import { Jison, Lexer } from '../setup';
 
 it('test 0+0 grammar', () => {

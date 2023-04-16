@@ -1,3 +1,4 @@
+import { expect, it } from 'bun:test';
 import { Jison, RegExpLexer } from '../setup';
 
 it('test Semantic action basic return', () => {
@@ -377,7 +378,7 @@ it('test action include', () => {
       E: [['E y', 'return test();'], ''],
     },
     actionInclude: function () {
-      function test(val) {
+      function test(val: any) {
         return 1;
       }
     },
