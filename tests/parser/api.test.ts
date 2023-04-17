@@ -1,5 +1,7 @@
 import { expect, it } from 'bun:test';
-import { Jison, Lexer } from '../setup';
+import Lexer from 'jison-lex';
+import { LR0Generator } from '../../src/jison';
+import { Jison } from '../../src/jison.js';
 import { Pojo } from '../../src/types';
 
 var lexData = {
@@ -132,7 +134,7 @@ it('test overwrite grammar options', () => {
   };
 
   var gen = new Jison.Generator(grammar, { type: 'lr0' });
-  expect(gen.constructor).toBe(Jison.LR0Generator);
+  expect(gen.constructor).toBe(LR0Generator);
 });
 
 it('test yy shared scope', () => {
@@ -172,7 +174,7 @@ it('test optional token declaration', () => {
   };
 
   var gen = new Jison.Generator(grammar, { type: 'lr0' });
-  expect(gen.constructor).toBe(Jison.LR0Generator);
+  expect(gen.constructor).toBe(LR0Generator);
 });
 
 it('test custom parse error method', () => {
