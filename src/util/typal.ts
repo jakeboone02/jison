@@ -8,7 +8,7 @@
 
 const positionRegEx = /^(before|after)/;
 
-export const typal = (function () {
+function Typal() {
   // basic method layering
   // always returns original method's return value
   function layerMethod(k: string, fun: Function /* ? */) {
@@ -81,4 +81,6 @@ export const typal = (function () {
       return this;
     },
   };
-})();
+}
+
+export const typal = Typal();
