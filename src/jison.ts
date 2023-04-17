@@ -9,7 +9,7 @@ import esprima from 'esprima';
 import Lexer from 'jison-lex';
 import { ItemSet } from './util/itemset.js';
 import { typal } from './util/typal.js';
-import { Pojo } from './types.js';
+import { Grammar, ParserOptions, Pojo, ProductionType } from './types.js';
 
 interface TJison {
   Generator?: any;
@@ -1973,30 +1973,31 @@ return new Parser;
       },
     }),
 
-    closureOperation: function LR_ClosureOperation(itemSet /*, closureSet*/) {
-      var closureSet = new this.ItemSet();
-      var self = this;
+    closureOperation: function LR_ClosureOperation(itemSet: any[] | Pojo) {
+      const closureSet = new this.ItemSet();
+      const self = this;
 
-      var set = itemSet,
-        itemQueue,
-        syms = {};
+      let set = itemSet;
+      let itemQueue: any;
+      const syms: Pojo = {};
 
       do {
         itemQueue = new ItemSet();
         closureSet.concat(set);
-        set.forEach(function (item) {
-          var symbol = item.markedSymbol;
-          var b, r;
+        set.forEach(function (item: any) {
+          const symbol = item.markedSymbol;
 
           // if token is a nonterminal, recursively add closures
           if (symbol && self.nonterminals[symbol]) {
-            r = item.remainingHandle();
-            b = self.first(item.remainingHandle());
+            const r = item.remainingHandle();
+            let b = self.first(item.remainingHandle());
             if (b.length === 0 || item.production.nullable || self.nullable(r)) {
               b = b.concat(item.follows);
             }
-            self.nonterminals[symbol].productions.forEach(function (production) {
-              var newItem = new self.Item(production, 0, b);
+            (self.nonterminals[symbol].productions as ProductionType[]).forEach(function (
+              production
+            ) {
+              const newItem = new self.Item(production, 0, b);
               if (!closureSet.contains(newItem) && !itemQueue.contains(newItem)) {
                 itemQueue.push(newItem);
               }
@@ -2016,22 +2017,22 @@ return new Parser;
 
   LR1Generator = lr1.construct();
 
-  /*
+  /**
    * LL Parser
-   * */
-  var ll = generator.beget(lookaheadMixin, {
+   */
+  const ll = generator.beget(lookaheadMixin, {
     type: 'LL(1)',
 
     afterconstructor: function ll_aftercontructor() {
       this.computeLookaheads();
       this.table = this.parseTable(this.productions);
     },
-    parseTable: function llParseTable(productions) {
-      var table = {},
-        self = this;
+    parseTable: function llParseTable(productions: ProductionType[] /* ? */) {
+      const table: Pojo = {};
+      const self = this;
       productions.forEach(function (production, i) {
-        var row = table[production.symbol] || {};
-        var tokens = production.first;
+        const row = table[production.symbol] || {};
+        const tokens = production.first;
         if (self.nullable(production.handle)) {
           ItemSet.union(tokens, self.nonterminals[production.symbol].follows);
         }
@@ -2052,8 +2053,8 @@ return new Parser;
 
   LLGenerator = ll.construct();
 
-  Jison.Generator = function Jison_Generator(g, options) {
-    var opt = typal.mix.call({}, g.options, options);
+  Jison.Generator = function Jison_Generator(g: Grammar, options: ParserOptions) {
+    const opt = typal.mix.call({}, g.options, options);
     switch (opt.type) {
       case 'lr0':
         return new LR0Generator(g, opt);
@@ -2068,8 +2069,8 @@ return new Parser;
     }
   };
 
-  return function Parser(g, options) {
-    var gen = Jison.Generator(g, options);
+  return function Parser(g: Grammar, options: ParserOptions) {
+    const gen = Jison.Generator(g, options);
     return gen.createParser();
   };
 })();
