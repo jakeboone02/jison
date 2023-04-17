@@ -1,6 +1,7 @@
 import { expect, it } from 'bun:test';
 import { unlink } from 'node:fs/promises';
-import { Jison, Lexer } from '../setup';
+import { Jison } from '../../src/jison.js';
+import Lexer from 'jison-lex';
 
 const writeToFile = async (contents: string) => {
   const tempModulePath = `${import.meta.dir}/../../tmp-${crypto.randomUUID()}.js`;

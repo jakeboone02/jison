@@ -1,5 +1,6 @@
 import { expect, it } from 'bun:test';
-import { Jison, Lexer } from '../setup';
+import { Jison } from '../../src/jison.js';
+import Lexer from 'jison-lex';
 
 var lexData = {
   rules: [

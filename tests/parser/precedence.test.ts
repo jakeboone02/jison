@@ -1,5 +1,6 @@
 import { expect, it } from 'bun:test';
-import { Jison, RegExpLexer } from '../setup';
+import { Jison } from '../../src/jison.js';
+import RegExpLexer from 'jison-lex';
 
 // var lexData = {
 //   rules: [

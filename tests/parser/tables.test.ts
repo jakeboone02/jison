@@ -1,5 +1,5 @@
 import { expect, it } from 'bun:test';
-import { Jison } from '../setup';
+import { Jison } from '../../src/jison.js';
 
 it('test right-recursive nullable grammar', function () {
   const grammar = {

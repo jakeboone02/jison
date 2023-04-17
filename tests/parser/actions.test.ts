@@ -1,5 +1,6 @@
 import { expect, it } from 'bun:test';
-import { Jison, RegExpLexer } from '../setup';
+import { Jison } from '../../src/jison.js';
+import RegExpLexer from 'jison-lex';
 
 it('test Semantic action basic return', () => {
   var lexData = {
