@@ -9,16 +9,9 @@ import esprima from 'esprima';
 import Lexer from 'jison-lex';
 import { ItemSet } from './util/itemset.js';
 import { typal } from './util/typal.js';
-import { Grammar, ParserOptions, Pojo, ProductionType } from './types.js';
+import { Grammar, IJison, ParserOptions, Pojo, ProductionType } from './types.js';
 
-interface TJison {
-  Generator?: any;
-  parser?: any;
-  Parser?: any;
-  print?: any;
-}
-
-export const Jison: TJison = {};
+export const Jison: IJison = {};
 
 export default Jison;
 

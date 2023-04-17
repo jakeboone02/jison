@@ -1,40 +1,5 @@
-// ItemSet class to wrap arrays
-
+import { SetMixin } from '../types.js';
 import { typal } from './typal.js';
-
-// TODO: update these from any to real types
-interface SetMixin {
-  constructor: any;
-  concat: any;
-  eq: any;
-  indexOf: any;
-  union: any;
-  intersection: any;
-  complement: any;
-  subset: any;
-  superset: any;
-  joinSet: any;
-  contains: any;
-  item: any;
-  i: any;
-  first: any;
-  last: any;
-  size: any;
-  isEmpty: any;
-  copy: any;
-  toString: any;
-  push?: any;
-  shift?: any;
-  unshift?: any;
-  forEach?: any;
-  some?: any;
-  every?: any;
-  join?: any;
-  sort?: any;
-  filter?: any;
-  slice?: any;
-  map?: any;
-}
 
 const setMixin: SetMixin = {
   constructor: function Set_constructor(set, raw) {
