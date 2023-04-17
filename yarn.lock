@@ -276,6 +276,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/esprima@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@types/esprima@npm:4.0.3"
+  dependencies:
+    "@types/estree": "*"
+  checksum: 266d1f87a9469688af0f143dec47caae25e6f689194da0d57d03d796cf8bdbfb99593717885e98d9538f1beff967a642f126d693e0e4b5fa4f4605fb55866919
+  languageName: node
+  linkType: hard
+
+"@types/estree@npm:*":
+  version: 1.0.0
+  resolution: "@types/estree@npm:1.0.0"
+  checksum: 910d97fb7092c6738d30a7430ae4786a38542023c6302b95d46f49420b797f21619cdde11fa92b338366268795884111c2eb10356e4bd2c8ad5b92941e9e6443
+  languageName: node
+  linkType: hard
+
 "Base64@npm:~0.1.2":
   version: 0.1.4
   resolution: "Base64@npm:0.1.4"
@@ -350,13 +366,6 @@ __metadata:
   version: 1.0.1
   resolution: "amdefine@npm:1.0.1"
   checksum: 9d4e15b94641643a9385b2841b4cb2bcf4e8e2f741ea4bd475c93ad7bab261ad4ed827a32e9c549b38b98759c4526c173ae4e6dde8caeb75ee5cebedc9863762
-  languageName: node
-  linkType: hard
-
-"ansi-font@npm:0.0.2":
-  version: 0.0.2
-  resolution: "ansi-font@npm:0.0.2"
-  checksum: 0d7b9d8c84473652786c64a55e451c4cae4a34c6398ce1e5e8344342817097da3c160ac4fcd93a0d7d14092332b6aae32a24482b35d79405ca2b8858defe8c62
   languageName: node
   linkType: hard
 
@@ -529,7 +538,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserify@npm:2.x.x":
+"browserify@npm:^2.36.1":
   version: 2.36.1
   resolution: "browserify@npm:2.36.1"
   dependencies:
@@ -691,10 +700,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "commander@npm:10.0.0"
-  checksum: 9f6495651f878213005ac744dd87a85fa3d9f2b8b90d1c19d0866d666bda7f735adfd7c2f10dfff345782e2f80ea258f98bb4efcef58e4e502f25f883940acfd
+"commander@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "commander@npm:10.0.1"
+  checksum: 436901d64a818295803c1996cd856621a74f30b9f9e28a588e726b2b1670665bccd7c1a77007ebf328729f0139838a88a19265858a0fa7a8728c4656796db948
   languageName: node
   linkType: hard
 
@@ -804,6 +813,13 @@ __metadata:
   version: 0.1.2
   resolution: "deep-equal@npm:0.1.2"
   checksum: cfbf683d496c3e5605f151359f7eba35838f6e9d709a9437a668a0d258dbc7bbad5d9376873e15c4ce4c1cf9c98b790eadcb15f0b1209ce17e8ad0d7932b7a14
+  languageName: node
+  linkType: hard
+
+"deep-is@npm:~0.1.3":
+  version: 0.1.4
+  resolution: "deep-is@npm:0.1.4"
+  checksum: edb65dd0d7d1b9c40b2f50219aef30e116cedd6fc79290e740972c132c09106d2e80aa0bc8826673dd5a00222d4179c84b36a790eef63a4c4bca75a37ef90804
   languageName: node
   linkType: hard
 
@@ -1004,21 +1020,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escodegen@npm:1.3.x":
-  version: 1.3.3
-  resolution: "escodegen@npm:1.3.3"
+"escodegen@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "escodegen@npm:2.0.0"
   dependencies:
-    esprima: ~1.1.1
-    estraverse: ~1.5.0
-    esutils: ~1.0.0
-    source-map: ~0.1.33
+    esprima: ^4.0.1
+    estraverse: ^5.2.0
+    esutils: ^2.0.2
+    optionator: ^0.8.1
+    source-map: ~0.6.1
   dependenciesMeta:
     source-map:
       optional: true
   bin:
-    escodegen: ./bin/escodegen.js
-    esgenerate: ./bin/esgenerate.js
-  checksum: b129392addbb347192ef3c439bf33d56ada5e9fc66f3cc41a5d3974d2036e091022b8682c5ab7b96bd70f6bec110378f7870c809384a093ed15307543e142e64
+    escodegen: bin/escodegen.js
+    esgenerate: bin/esgenerate.js
+  checksum: 5aa6b2966fafe0545e4e77936300cc94ad57cfe4dc4ebff9950492eaba83eef634503f12d7e3cbd644ecc1bab388ad0e92b06fd32222c9281a75d1cf02ec6cef
   languageName: node
   linkType: hard
 
@@ -1032,17 +1049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esprima@npm:1.1.x, esprima@npm:~1.1.1":
-  version: 1.1.1
-  resolution: "esprima@npm:1.1.1"
-  bin:
-    esparse: ./bin/esparse.js
-    esvalidate: ./bin/esvalidate.js
-  checksum: 9285b74e7ab5c934fffc24516d3380f7a758ee0fd106102edf2b0fcc085be191976d4d5bdcdae1d826d5eb0d25ab968f2bec1ee9f31b0e27b4da24ac7e18a763
-  languageName: node
-  linkType: hard
-
-"esprima@npm:>= 1.0.0":
+"esprima@npm:>= 1.0.0, esprima@npm:^4.0.1":
   version: 4.0.1
   resolution: "esprima@npm:4.0.1"
   bin:
@@ -1061,17 +1068,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"estraverse@npm:~1.5.0":
-  version: 1.5.1
-  resolution: "estraverse@npm:1.5.1"
-  checksum: f2d62bfd22a106f53c043f643f5d73a1b3004e58d6c215dec9f9fcc1d1356daf5e7417a3384d45367e224871a67b298e081e1aa06ceb361425f98264f33dcac0
+"estraverse@npm:^5.2.0":
+  version: 5.3.0
+  resolution: "estraverse@npm:5.3.0"
+  checksum: 072780882dc8416ad144f8fe199628d2b3e7bbc9989d9ed43795d2c90309a2047e6bc5979d7e2322a341163d22cfad9e21f4110597fe487519697389497e4e2b
   languageName: node
   linkType: hard
 
-"esutils@npm:~1.0.0":
-  version: 1.0.0
-  resolution: "esutils@npm:1.0.0"
-  checksum: 7c524f1744219908698ea4b5349f494bf7e308d3b5f4a459b08c24cb0f35ef0de450f6d8cf9683c96f9339699e80ce2e1ffb530b5a255ec8b50a1e1e50140ffc
+"esutils@npm:^2.0.2":
+  version: 2.0.3
+  resolution: "esutils@npm:2.0.3"
+  checksum: 22b5b08f74737379a840b8ed2036a5fb35826c709ab000683b092d9054e5c2a82c27818f12604bfc2a9a76b90b6834ef081edbc1c7ae30d1627012e067c6ec87
   languageName: node
   linkType: hard
 
@@ -1102,6 +1109,13 @@ __metadata:
     merge2: ^1.3.0
     micromatch: ^4.0.4
   checksum: 0b1990f6ce831c7e28c4d505edcdaad8e27e88ab9fa65eedadb730438cfc7cde4910d6c975d6b7b8dc8a73da4773702ebcfcd6e3518e73938bb1383badfe01c2
+  languageName: node
+  linkType: hard
+
+"fast-levenshtein@npm:~2.0.6":
+  version: 2.0.6
+  resolution: "fast-levenshtein@npm:2.0.6"
+  checksum: 92cfec0a8dfafd9c7a15fba8f2cc29cd0b62b85f056d99ce448bbcd9f708e18ab2764bda4dd5158364f4145a7c72788538994f0d1787b956ef0d1062b0f7c24c
   languageName: node
   linkType: hard
 
@@ -1490,19 +1504,19 @@ __metadata:
   resolution: "jison@workspace:."
   dependencies:
     "@types/escodegen": ^0.0.7
+    "@types/esprima": ^4.0.3
     JSONSelect: 0.4.0
-    browserify: 2.x.x
+    browserify: ^2.36.1
     bun-types: ^0.5.8
-    commander: ^10.0.0
+    commander: ^10.0.1
     ebnf-parser: 0.1.10
-    escodegen: 1.3.x
-    esprima: 1.1.x
+    escodegen: ^2.0.0
+    esprima: ^4.0.1
     jison: "workspace:."
     jison-lex: 0.3.x
     jsonc-parser: ^3.2.0
     lex-parser: ~0.1.3
     prettier: 2.8.7
-    test: 0.6.x
     tsup: ^6.7.0
     typescript: ^5.0.4
     uglify-js: ~2.4.0
@@ -1536,6 +1550,16 @@ __metadata:
   version: 0.0.5
   resolution: "jsonparse@npm:0.0.5"
   checksum: dd23da239778dd8e4fcbee7db1998628411877f13573991f93110ef5f9983db50ce2ff88853e1e8e59b86b5b3dcf854f804d9a928688d042a42d7cb6e3ed09cd
+  languageName: node
+  linkType: hard
+
+"levn@npm:~0.3.0":
+  version: 0.3.0
+  resolution: "levn@npm:0.3.0"
+  dependencies:
+    prelude-ls: ~1.1.2
+    type-check: ~0.3.2
+  checksum: 0d084a524231a8246bb10fec48cdbb35282099f6954838604f3c7fc66f2e16fa66fd9cc2f3f20a541a113c4dafdf181e822c887c8a319c9195444e6c64ac395e
   languageName: node
   linkType: hard
 
@@ -1926,6 +1950,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"optionator@npm:^0.8.1":
+  version: 0.8.3
+  resolution: "optionator@npm:0.8.3"
+  dependencies:
+    deep-is: ~0.1.3
+    fast-levenshtein: ~2.0.6
+    levn: ~0.3.0
+    prelude-ls: ~1.1.2
+    type-check: ~0.3.2
+    word-wrap: ~1.2.3
+  checksum: b8695ddf3d593203e25ab0900e265d860038486c943ff8b774f596a310f8ceebdb30c6832407a8198ba3ec9debe1abe1f51d4aad94843612db3b76d690c61d34
+  languageName: node
+  linkType: hard
+
 "os-browserify@npm:0.1.x":
   version: 0.1.2
   resolution: "os-browserify@npm:0.1.2"
@@ -2008,6 +2046,13 @@ __metadata:
     ts-node:
       optional: true
   checksum: 1c589504c2d90b1568aecae8238ab993c17dba2c44f848a8f13619ba556d26a1c09644d5e6361b5784e721e94af37b604992f9f3dc0483e687a0cc1cc5029a34
+  languageName: node
+  linkType: hard
+
+"prelude-ls@npm:~1.1.2":
+  version: 1.1.2
+  resolution: "prelude-ls@npm:1.1.2"
+  checksum: c4867c87488e4a0c233e158e4d0d5565b609b105d75e4c05dc760840475f06b731332eb93cc8c9cecb840aa8ec323ca3c9a56ad7820ad2e63f0261dadcb154e4
   languageName: node
   linkType: hard
 
@@ -2310,7 +2355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map@npm:~0.1.31, source-map@npm:~0.1.33, source-map@npm:~0.1.7":
+"source-map@npm:~0.1.31, source-map@npm:~0.1.7":
   version: 0.1.43
   resolution: "source-map@npm:0.1.43"
   dependencies:
@@ -2325,6 +2370,13 @@ __metadata:
   dependencies:
     amdefine: ">=0.0.4"
   checksum: 395757a0891e1d5d68dd19ff803c4c281a496486539948c4447aab68416206573218a5f89ea3cbd39f77d9e4c6dd81e90a3f1c35e852107d8772069d4cfe5c11
+  languageName: node
+  linkType: hard
+
+"source-map@npm:~0.6.1":
+  version: 0.6.1
+  resolution: "source-map@npm:0.6.1"
+  checksum: 59ce8640cf3f3124f64ac289012c2b8bd377c238e316fb323ea22fbfe83da07d81e000071d7242cad7a23cd91c7de98e4df8830ec3f133cb6133a5f6e9f67bc2
   languageName: node
   linkType: hard
 
@@ -2434,15 +2486,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"test@npm:0.6.x":
-  version: 0.6.0
-  resolution: "test@npm:0.6.0"
-  dependencies:
-    ansi-font: 0.0.2
-  checksum: 5d6c4ede72bbc24125881814720c0b894210aa0705be11af570db4de58e3068d7d7ea14f6736e18349938e0b3e91d27f8c83f187cc78c91ee688a33bc9a3588d
-  languageName: node
-  linkType: hard
-
 "thenify-all@npm:^1.0.0":
   version: 1.6.0
   resolution: "thenify-all@npm:1.6.0"
@@ -2549,6 +2592,15 @@ __metadata:
     tsup: dist/cli-default.js
     tsup-node: dist/cli-node.js
   checksum: 91ff179f0b9828a6880b6decaa8603fd7af0311f46a38d3a93647a2497298750d676810aeff533a335443a01a7b340dbba7c76523bcd7a87d7b05b7677742901
+  languageName: node
+  linkType: hard
+
+"type-check@npm:~0.3.2":
+  version: 0.3.2
+  resolution: "type-check@npm:0.3.2"
+  dependencies:
+    prelude-ls: ~1.1.2
+  checksum: dd3b1495642731bc0e1fc40abe5e977e0263005551ac83342ecb6f4f89551d106b368ec32ad3fb2da19b3bd7b2d1f64330da2ea9176d8ddbfe389fb286eb5124
   languageName: node
   linkType: hard
 
@@ -2702,6 +2754,13 @@ __metadata:
   version: 0.1.0
   resolution: "window-size@npm:0.1.0"
   checksum: ca88d06a353e2ab264f68d8684c3e6bb461ac3b2205c372c290785cb4367e57a025d7760a0b030ea6af4daf5884394b78d0b2480e8d6699d8d799d5c65edcbd0
+  languageName: node
+  linkType: hard
+
+"word-wrap@npm:~1.2.3":
+  version: 1.2.3
+  resolution: "word-wrap@npm:1.2.3"
+  checksum: 30b48f91fcf12106ed3186ae4fa86a6a1842416df425be7b60485de14bec665a54a68e4b5156647dec3a70f25e84d270ca8bc8cd23182ed095f5c7206a938c1f
   languageName: node
   linkType: hard
 
