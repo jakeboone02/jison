@@ -269,6 +269,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/escodegen@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "@types/escodegen@npm:0.0.7"
+  checksum: 19625e3f61096e989c851e5db9758636618fb841d6adb295494a46613f68b025cb79474401e7b25508506799f94adcb17bb04b4f355862671caf8002ca77af0d
+  languageName: node
+  linkType: hard
+
 "Base64@npm:~0.1.2":
   version: 0.1.4
   resolution: "Base64@npm:0.1.4"
@@ -1482,6 +1489,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "jison@workspace:."
   dependencies:
+    "@types/escodegen": ^0.0.7
     JSONSelect: 0.4.0
     browserify: 2.x.x
     bun-types: ^0.5.8
@@ -1493,7 +1501,6 @@ __metadata:
     jison-lex: 0.3.x
     jsonc-parser: ^3.2.0
     lex-parser: ~0.1.3
-    nomnom: 1.5.2
     prettier: 2.8.7
     test: 0.6.x
     tsup: ^6.7.0
